@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -8,6 +8,7 @@ import Product from './pages/Product';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 import Auth from './pages/Auth';
+import Customize from './pages/Customize';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/customize" element={<Customize />} />
           </Routes>
         </main>
         <Footer />

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook } from 'lucide-react';
 
 function Footer() {
@@ -8,7 +8,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">LIENZO</h3>
-            <p className="text-gray-400">Premium streetwear for the bold and authentic.</p>
+            <p className="text-gray-400">Where Style is Redefined</p>
           </div>
           
           <div>
@@ -26,15 +26,15 @@ function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                <span className="text-gray-400">info@lienzo.com</span>
+                <span className="text-gray-400">support@lienzo.co.in</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4" />
-                <span className="text-gray-400">+1 234 567 890</span>
+                <span className="text-gray-400">+91 9307719509</span>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
-                <span className="text-gray-400">123 Street Fashion, NY</span>
+                <span className="text-gray-400"></span>
               </li>
             </ul>
           </div>

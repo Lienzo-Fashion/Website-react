@@ -1,17 +1,29 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Clock, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
+import SnowEffect from '../components/SnowEffect';
 
 function Home() {
   const navigate = useNavigate();
+
   // Set sale end date to 7 days from now
   const saleEndDate = new Date();
   saleEndDate.setDate(saleEndDate.getDate() + 7);
 
+  // Define images for each category with explicit type
+  const categoryImages: Record<'hoodies' | 'shirts' | 'accessories', string> = {
+    hoodies: "https://nobero.com/cdn/shop/files/black_94ef5b95-b2a3-447f-8234-6c85a43c046d.jpg?v=1698254415",
+    shirts: "https://images.glowroad.com/faceview/i7d/ic/i3j/bj/imgs/95a17e1a-a8da-4bc6-a537-728589c4eb84_19898283-xlgn400x400.jpg?productId=P-25215523",
+    accessories: "https://nextluxury.com/wp-content/uploads/Top-15-Fashion-Accessories-For-Men-1.jpg",
+  };
+
+  // Valid categories as a type
+  type Category = keyof typeof categoryImages;
+
   return (
     <div className="relative">
+      <SnowEffect />
       {/* Hero Section */}
       <div className="h-screen relative overflow-hidden">
         <motion.div
@@ -20,7 +32,7 @@ function Home() {
           transition={{ duration: 1 }}
           className="absolute inset-0"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&q=80)',
+           
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -42,7 +54,7 @@ function Home() {
               transition={{ delay: 0.4 }}
               className="text-xl mb-8"
             >
-              Premium Streetwear Collection
+              Where Style is Redefine...!
             </motion.p>
             <motion.button
               initial={{ y: 20, opacity: 0 }}
@@ -84,7 +96,7 @@ function Home() {
                 </div>
                 <div className="relative w-full md:w-1/2 aspect-square md:aspect-[4/3]">
                   <img
-                    src="https://images.unsplash.com/photo-1556821840-5a7f7bf75d41?auto=format&fit=crop&q=80"
+                    src="https://media.istockphoto.com/id/2007738547/vector/limited-offer-banner-template-on-the-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=UweVxYhSfyv6k01BU-4ovp6OdoB8sxfry9Ts0QzgQ4k="
                     alt="Limited offer hoodie"
                     className="w-full h-full object-cover rounded-lg"
                   />
@@ -110,7 +122,7 @@ function Home() {
             Featured Categories
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {['Hoodies', 'Shirts', 'Accessories'].map((category, index) => (
+            {(Object.keys(categoryImages) as Category[]).map((category, index) => (
               <motion.div
                 key={category}
                 initial={{ opacity: 0, y: 20 }}
@@ -121,13 +133,13 @@ function Home() {
                 onClick={() => navigate('/shop')}
               >
                 <img
-                  src={`https://images.unsplash.com/photo-${index + 1}?auto=format&fit=crop&q=80`}
+                  src={categoryImages[category]}
                   alt={category}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-6 left-6">
-                  <h3 className="text-2xl font-bold mb-2">{category}</h3>
+                  <h3 className="text-2xl font-bold mb-2">{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
                   <p className="text-gray-300">Shop Now →</p>
                 </div>
               </motion.div>

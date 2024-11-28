@@ -1,10 +1,7 @@
-import React, { useState, Suspense } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stage } from '@react-three/drei';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Heart } from 'lucide-react';
-import HoodieModel from '../components/3d/HoodieModel';
 import { useCartStore } from '../store/cartStore';
 
 const products = [
@@ -25,7 +22,6 @@ const products = [
 
 function Product() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
   
   const [selectedSize, setSelectedSize] = useState('M');
@@ -61,16 +57,9 @@ function Product() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* 3D Model Viewer */}
+        {/* Product Image */}
         <div className="h-[600px] bg-gray-900 rounded-lg overflow-hidden">
-          <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 0, 4], fov: 50 }}>
-            <Suspense fallback={null}>
-              <Stage environment="city" intensity={0.6}>
-                <HoodieModel color={selectedColor} />
-              </Stage>
-              <OrbitControls autoRotate />
-            </Suspense>
-          </Canvas>
+          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
         </div>
 
         {/* Product Details */}
@@ -81,7 +70,7 @@ function Product() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl font-bold mb-2">{product.name}</h1>
-            <p className="text-2xl mb-4">${product.price}</p>
+            <p className="text-2xl mb-4">{`₹${product.price.toFixed(2)}`}</p> {/* Changed to rupee symbol */}
             <p className="text-gray-400 mb-6">
               Elevate your street style with our premium hoodie. Crafted from high-quality
               materials for ultimate comfort and durability.

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { Minus, Plus, X } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
@@ -24,7 +24,7 @@ function Cart() {
           ) : (
             items.map((item) => (
               <motion.div
-                key={`${item.id}-${item.size}-${item.color}`}
+                key={`₹{item.id}-₹{item.size}-₹{item.color}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -41,7 +41,7 @@ function Cart() {
                   <p className="text-gray-400">
                     Size: {item.size} | Color: {item.color}
                   </p>
-                  <p className="font-semibold">${item.price}</p>
+                  <p className="font-semibold">₹{item.price}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -78,20 +78,20 @@ function Cart() {
           <div className="space-y-2 mb-4">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>₹{subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span>Shipping</span>
-              <span>${shipping.toFixed(2)}</span>
+              <span>₹{shipping.toFixed(2)}</span>
             </div>
             <div className="border-t border-gray-800 pt-2 flex justify-between font-bold">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>₹{total.toFixed(2)}</span>
             </div>
           </div>
 
           <button 
-            className={`w-full py-3 rounded-lg transition-colors ${
+            className={`w-full py-3 rounded-lg transition-colors ₹{
               items.length > 0
                 ? 'bg-white text-black hover:bg-gray-200'
                 : 'bg-gray-800 text-gray-400 cursor-not-allowed'

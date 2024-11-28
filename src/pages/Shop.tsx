@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Filter, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
-function Shop() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+const Shop: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
 
   const categories = ['all', 'hoodies', 'shirts', 'pants', 'accessories'];
-  
+
   const products = [
     {
       id: 1,
@@ -40,8 +40,8 @@ function Shop() {
     },
   ];
 
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
+  const filteredProducts = selectedCategory === 'all'
+    ? products
     : products.filter(product => product.category === selectedCategory);
 
   const container = {
@@ -49,26 +49,36 @@ function Shop() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    show: { opacity: 1, y: 0 },
   };
 
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="relative h-[40vh] bg-gradient-to-r from-gray-900 to-black flex items-center justify-center"
-      >
-        <div className="text-center">
-          <motion.h1 
+      <motion.div className="relative h-[60vh] bg-gradient-to-r from-gray-900 to-black flex flex-col items-center justify-end">
+        <div className="absolute inset-0 w-full h-full bg-black bg-opacity-50">
+          {/* Video section */}
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ pointerEvents: 'none' }}
+          >
+            <source src="/resources/Final10000-0240.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div className="text-center z-10 mb-12"> {/* Adjust margin-bottom */}
+          <motion.h1
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -76,7 +86,7 @@ function Shop() {
           >
             Shop Collection
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -87,10 +97,11 @@ function Shop() {
         </div>
       </motion.div>
 
+
       {/* Filters */}
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <motion.div 
+          <motion.div
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             className="relative mb-4 md:mb-0"
@@ -103,9 +114,9 @@ function Shop() {
               <span>Filter</span>
               <ChevronDown className={`w-4 h-4 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
             </button>
-            
+
             {isFilterOpen && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="absolute top-full left-0 mt-2 bg-gray-900 rounded-lg shadow-xl p-2 z-10"
@@ -117,9 +128,8 @@ function Shop() {
                       setSelectedCategory(category);
                       setIsFilterOpen(false);
                     }}
-                    className={`block w-full text-left px-4 py-2 rounded-lg capitalize ${
-                      selectedCategory === category ? 'bg-white text-black' : 'hover:bg-gray-800'
-                    }`}
+                    className={`block w-full text-left px-4 py-2 rounded-lg capitalize ${selectedCategory === category ? 'bg-white text-black' : 'hover:bg-gray-800'
+                      }`}
                   >
                     {category}
                   </button>
@@ -128,7 +138,7 @@ function Shop() {
             )}
           </motion.div>
 
-          <motion.p 
+          <motion.p
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             className="text-gray-400"
@@ -138,7 +148,7 @@ function Shop() {
         </div>
 
         {/* Product Grid */}
-        <motion.div 
+        <motion.div
           variants={container}
           initial="hidden"
           animate="show"
@@ -172,7 +182,7 @@ function Shop() {
                   </motion.button>
                 </div>
                 <h3 className="font-semibold mb-2">{product.name}</h3>
-                <p className="text-gray-400">${product.price}</p>
+                <p className="text-gray-400">{`₹${product.price.toFixed(2)}`}</p> {/* Changed to rupee symbol */}
               </Link>
             </motion.div>
           ))}

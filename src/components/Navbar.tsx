@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ShoppingCart, User } from 'lucide-react';
+import { Menu, X, ShoppingCart, User, Palette } from 'lucide-react';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +20,9 @@ function Navbar() {
             </Link>
             <Link to="/shop" className="hover:text-gray-300 transition-colors">
               Shop
+            </Link>
+            <Link to="/customize" className="hover:text-gray-300 transition-colors">
+              <Palette className="w-6 h-6" />
             </Link>
             <Link to="/cart" className="hover:text-gray-300 transition-colors">
               <ShoppingCart className="w-6 h-6" />
@@ -55,6 +58,13 @@ function Navbar() {
                 onClick={() => setIsOpen(false)}
               >
                 Shop
+              </Link>
+              <Link
+                to="/customize"
+                className="block px-3 py-2 rounded-md hover:bg-gray-900 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Customize
               </Link>
               <Link
                 to="/cart"
