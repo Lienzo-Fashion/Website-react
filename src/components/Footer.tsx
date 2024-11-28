@@ -42,13 +42,13 @@ function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-gray-400 transition-colors">
+              <a href="https://lienzo.co.in/instagram" className="hover:text-gray-400 transition-colors">
                 <Instagram className="w-6 h-6" />
               </a>
-              <a href="#" className="hover:text-gray-400 transition-colors">
+              <a href="https://lienzo.co.in/twitter" className="hover:text-gray-400 transition-colors">
                 <Twitter className="w-6 h-6" />
               </a>
-              <a href="#" className="hover:text-gray-400 transition-colors">
+              <a href="https://lienzo.co.in/facebook" className="hover:text-gray-400 transition-colors">
                 <Facebook className="w-6 h-6" />
               </a>
             </div>
