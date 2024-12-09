@@ -35,7 +35,7 @@ function Shop() {
             playsInline
             style={{ pointerEvents: 'none' }}
           >
-            <source src="/resources/Final10000-0240.mp4" type="video/mp4" />
+            <source src="/Videos/Final10000-0240.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
