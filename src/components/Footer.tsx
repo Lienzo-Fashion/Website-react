@@ -1,66 +1,104 @@
+import { Link } from 'react-router-dom';
+import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 
-import { Mail, Phone, MapPin, Instagram, Twitter, Facebook } from 'lucide-react';
+const Footer: React.FC = () => {
+  const currentYear: number = new Date().getFullYear();
 
-function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-12">
-      <div className="container mx-auto px-4">
+    <footer className="bg-black text-white border-t border-white/10">
+      <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Brand Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">LIENZO</h3>
+            <h3 className="text-2xl font-bold mb-4">LIENZO</h3>
             <p className="text-gray-400">Where Style is Redefined</p>
           </div>
-          
+
+          {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="/shop" className="text-gray-400 hover:text-white transition-colors">Shop</a></li>
-              <li><a href="/about" className="text-gray-400 hover:text-white transition-colors">About</a></li>
-              <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-              <li><a href="/faq" className="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Contact</h4>
-            <ul className="space-y-2">
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                <span className="text-gray-400">support@lienzo.co.in</span>
+              <li>
+                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
+                  Home
+                </Link>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                <span className="text-gray-400">+91 9307719509</span>
+              <li>
+                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
+                  About Us
+                </Link>
               </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                <span className="text-gray-400"></span>
+              <li>
+                <Link to="/faq" className="text-gray-400 hover:text-white transition-colors">
+                  FAQ
+                </Link>
               </li>
             </ul>
           </div>
-          
+
+          {/* Legal Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+            <h4 className="font-semibold mb-4">Legal</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/privacy" className="text-gray-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="text-gray-400 hover:text-white transition-colors">
+                  Terms & Conditions
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Social Links */}
+          <div>
+            <h4 className="font-semibold mb-4">Follow Us</h4>
             <div className="flex space-x-4">
-              <a href="https://lienzo.co.in/instagram" className="hover:text-gray-400 transition-colors">
-                <Instagram className="w-6 h-6" />
+              <a
+                href="https://www.facebook.com/share/18ERDQRPQP/?mibextid=qi2Omg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://lienzo.co.in/twitter" className="hover:text-gray-400 transition-colors">
-                <Twitter className="w-6 h-6" />
+              <a
+                href="https://x.com/lienzo10329"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Twitter className="w-5 h-5" />
               </a>
-              <a href="https://lienzo.co.in/facebook" className="hover:text-gray-400 transition-colors">
-                <Facebook className="w-6 h-6" />
+              <a
+                href="https://www.instagram.com/lienzo_fashion_hub?igsh=Z3l3bDFjdm5xMHk3"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Youtube className="w-5 h-5" />
               </a>
             </div>
           </div>
         </div>
-        
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} LIENZO. All rights reserved.</p>
+
+        <div className="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; {currentYear} LIENZO. All rights reserved.</p>
         </div>
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
