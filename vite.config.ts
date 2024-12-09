@@ -12,10 +12,14 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'], // Exclude specific dependencies from optimization
   },
- // Automatically open the browser
-
   build: {
     outDir: 'dist', // Specify the output directory
     sourcemap: true, // Enable source maps for debugging
+    assetsInlineLimit: 0, // Disable inlining of assets completely
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]', // Configure output file names
+      },
+    },
   },
 });
