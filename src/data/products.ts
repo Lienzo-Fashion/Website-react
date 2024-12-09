@@ -17,7 +17,7 @@ export const products: Product[] = [
     name: 'Unleash Your Creativity',
     price: 1499.00,
     category: 'hoodies',
-    image: ['src/components/assets/product_mockup/Mockups (1).png'],
+    image: ['./src/components/assets/product_mockup/Mockups (1).png'],
     colors: ['black', 'white', 'grey'],
     description: ""
   },
