@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Filter, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { products } from '../data/products';
-import ProductSlider from '../components/ProductSlider';
+import ProductSlider from '../components/ProductSwipe';
 
 function Shop() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -41,7 +41,7 @@ function Shop() {
         </div>
         <div className="text-center z-10 mb-12">
           <motion.h1
-            initial={{ y: -20, opacity: 0 }}
+            initial={{ y:20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
             className="text-4xl md:text-6xl font-bold mb-4"
@@ -59,61 +59,59 @@ function Shop() {
         </div>
       </motion.div>
 
-      {/* Filters */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            className="relative mb-4 md:mb-0"
-          >
-            <button
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="flex items-center gap-2 bg-gray-900 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
-            >
-              <Filter className="w-5 h-5" />
-              <span>Filter</span>
-              <ChevronDown
-                className={`w-4 h-4 transition-transform ${
-                  isFilterOpen ? 'rotate-180' : ''
-                }`}
-              />
-            </button>
+      {/* Filters Section */}
+<div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+  <motion.div
+    initial={{ x: -20, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    className="relative mb-4 md:mb-0"
+  >
+    <button
+      onClick={() => setIsFilterOpen(!isFilterOpen)}
+      className="flex items-center gap-2 bg-gray-900 px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+    >
+      <Filter className="w-5 h-5" />
+      <span>Filter</span>
+      <ChevronDown
+        className={`w-4 h-4 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`}
+      />
+    </button>
 
-            {isFilterOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="absolute top-full left-0 mt-2 bg-gray-900 rounded-lg shadow-xl p-2 z-10"
-              >
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => {
-                      setSelectedCategory(category);
-                      setIsFilterOpen(false);
-                    }}
-                    className={`block w-full text-left px-4 py-2 rounded-lg capitalize ${
-                      selectedCategory === category
-                        ? 'bg-white text-black'
-                        : 'hover:bg-gray-800'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </motion.div>
-
-          <motion.p
-            initial={{ x: 20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            className="text-gray-400"
+    {/* Dropdown Menu */}
+    {isFilterOpen && (
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        className="absolute top-full left-0 mt-2 bg-gray-900 rounded-lg shadow-xl p-2 z-10"
+      >
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => {
+              setSelectedCategory(category);
+              setIsFilterOpen(false);
+            }}
+            className={`block w-full text-left px-4 py-2 rounded-lg capitalize ${
+              selectedCategory === category ? 'bg-white text-black' : 'hover:bg-gray-800'
+            }`}
           >
-            Showing {filteredProducts.length} products
-          </motion.p>
-        </div>
+            {category}
+          </button>
+        ))}
+      </motion.div>
+    )}
+  </motion.div>
+
+  <motion.p
+    initial={{ x: 20, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    className="text-gray-400"
+  >
+    Showing {filteredProducts.length} products
+  </motion.p>
+</div>
+
 
         {/* Product Sliders */}
         <div className="space-y-12">
@@ -133,7 +131,7 @@ function Shop() {
           )}
         </div>
       </div>
-    </div>
+  
   );
 }
 

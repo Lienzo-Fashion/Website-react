@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ShoppingCart, User, Info } from 'lucide-react';
+import { Menu, X, ShoppingCart, User } from 'lucide-react';
 
-function Navbar() {
+function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -36,6 +36,7 @@ function Navbar() {
           <button
             className="md:hidden"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -51,6 +52,13 @@ function Navbar() {
                 onClick={() => setIsOpen(false)}
               >
                 Home
+              </Link>
+              <Link
+                to="/categories"
+                className="block px-3 py-2 rounded-md hover:bg-gray-900 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Categories
               </Link>
               <Link
                 to="/shop"

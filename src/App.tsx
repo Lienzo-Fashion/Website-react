@@ -12,14 +12,17 @@ import Faq from './pages/Faq';
 import AboutUs from './pages/AboutUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ContactUs from './pages/ContactUs';
+import Categories from './pages/Categories'; 
+import Terms from './pages/Terms';
+// Ensure this file exists
 
 function App() {
   const { user } = useAuthStore();
 
-  // Define a component to handle redirection logic
+  // Component to handle redirection if the user is not authenticated
   const AuthRedirect = ({ children }: { children: JSX.Element }) => {
     if (!user) {
-      return <Navigate to="/auth" replace />; // Redirect to Auth if user is not logged in
+      return <Navigate to="/auth" replace />;
     }
     return children;
   };
@@ -34,7 +37,7 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<Product />} />
             <Route path="/cart" element={<Cart />} />
-            {/* Protect the Profile route */}
+            {/* Protected Route for Profile */}
             <Route
               path="/profile"
               element={
@@ -46,9 +49,14 @@ function App() {
             <Route path="/faq" element={<Faq />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/about" element={<AboutUs />} />
-            {/* Auth page remains public */}
-            <Route path="/auth" element={<Auth />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/categories" element={<Categories />} />
+            {/* Public Auth Page */}
+            <Route path="/auth" element={<Auth />} />
+            {/* Catch-all Route (404) */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/terms" element={<Terms />} />
+
           </Routes>
         </main>
         <Footer />

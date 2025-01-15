@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import PageHeader from '../components/PageHeader';
 
 export default function Terms() {
+  // Define sections for terms and conditions
   const sections = [
     {
       title: 'Acceptance of Terms',
@@ -31,17 +32,20 @@ export default function Terms() {
 
   return (
     <div className="bg-black text-white min-h-screen">
+      {/* Page Header Component */}
       <PageHeader
         title="Terms and Conditions"
         subtitle="Last updated: March 2024"
       />
       
+      {/* Main Content Section */}
       <div className="container mx-auto px-4 py-16">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="max-w-3xl mx-auto"
         >
+          {/* Render each section dynamically */}
           {sections.map((section, index) => (
             <motion.div
               key={section.title}
@@ -55,6 +59,7 @@ export default function Terms() {
             </motion.div>
           ))}
           
+          {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -64,8 +69,11 @@ export default function Terms() {
             <p className="text-gray-400">
               For any questions regarding these terms, please contact us at:
               <br />
-              <a href="mailto:legal@lienzo.com" className="text-white hover:underline">
-                legal@lienzo.com
+              <a
+                href="mailto:support@lienzo.co.in"
+                className="text-white hover:underline"
+              >
+                support@lienzo.co.in
               </a>
             </p>
           </motion.div>

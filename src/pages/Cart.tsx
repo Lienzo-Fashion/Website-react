@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 import { Minus, Plus, X } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
@@ -11,7 +10,13 @@ function Cart() {
   const total = subtotal + shipping;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <motion.div
+      initial={{ y: '-100vh', opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: '-100vh', opacity: 0 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      className="container mx-auto px-4 py-8"
+    >
       <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -24,7 +29,7 @@ function Cart() {
           ) : (
             items.map((item) => (
               <motion.div
-                key={`₹{item.id}-₹{item.size}-₹{item.color}`}
+                key={`${item.id}-${item.size}-${item.color}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -90,8 +95,8 @@ function Cart() {
             </div>
           </div>
 
-          <button 
-            className={`w-full py-3 rounded-lg transition-colors ₹{
+          <button
+            className={`w-full py-3 rounded-lg transition-colors ${
               items.length > 0
                 ? 'bg-white text-black hover:bg-gray-200'
                 : 'bg-gray-800 text-gray-400 cursor-not-allowed'
@@ -102,7 +107,7 @@ function Cart() {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
