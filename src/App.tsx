@@ -22,16 +22,7 @@ import { useEffect } from 'react';
 
 function App() {
   const { user, userData, isLoading } = useAuthStore();
-  const location = useLocation();
-
-  // Track page views on route change
-  useEffect(() => {
-    if (window.gtag) {
-      window.gtag('event', 'page_view', {
-        page_path: location.pathname + location.search,
-      });
-    }
-  }, [location]);
+  // Removed useLocation and useEffect for Google Analytics
 
   // Component to handle redirection if the user is not authenticated
   const AuthRedirect = ({ children }: { children: JSX.Element }) => {
@@ -53,7 +44,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
       <div className="min-h-screen bg-black text-white">
         <Toaster position="top-right" reverseOrder={false} />
@@ -92,12 +83,11 @@ function App() {
             {/* Catch-all Route (404) */}
             <Route path="*" element={<Navigate to="/" replace />} />
             <Route path="/terms" element={<Terms />} />
-
           </Routes>
         </main>
         <Footer />
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 
