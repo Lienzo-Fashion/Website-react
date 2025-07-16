@@ -26,7 +26,7 @@ export default function Terms() {
     },
     {
       title: 'Returns and Refunds',
-      content: `Returns are accepted within 30 days of purchase for unworn items with original tags. Refunds will be issued to the original payment method.`,
+      content: `Returns are accepted within 30 days of purchase for wrong item sent with original tags. Refunds will be issued to the original payment method.`,
     },
   ];
 

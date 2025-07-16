@@ -26,9 +26,9 @@ function ProductImageGallery({ images, productName }: ProductImageGalleryProps) 
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full flex justify-center">
       {/* Main Image */}
-      <div className="relative aspect-square md:aspect-[4/3] lg:aspect-square overflow-hidden rounded-lg bg-gray-900">
+      <div className="relative aspect-square md:aspect-[4/3] lg:aspect-square overflow-hidden rounded-lg bg-gray-900 max-w-md w-full h-72 md:h-80 lg:h-96 mx-auto">
         <motion.img
           key={currentImageIndex}
           src={images[currentImageIndex]}

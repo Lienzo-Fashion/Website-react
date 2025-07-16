@@ -2,6 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics, Analytics } from 'firebase/analytics';
 import { getAuth, Auth } from 'firebase/auth';
+import { getFirestore, Firestore } from 'firebase/firestore';
 
 // Define the Firebase configuration object with proper typing
 const firebaseConfig: {
@@ -33,5 +34,8 @@ const analytics: Analytics | null = firebaseConfig.measurementId
 // Initialize Firebase Authentication with proper typing
 const auth: Auth = getAuth(app);
 
+// Initialize Firestore
+const db: Firestore = getFirestore(app);
+
 // Export the auth and analytics objects
-export { auth, analytics };
+export { auth, analytics, db };

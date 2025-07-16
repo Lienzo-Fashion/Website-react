@@ -11,6 +11,7 @@ function Product() {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [warning, setWarning] = useState<string | null>(null);
   const { addItem } = useCartStore();
   
   const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
@@ -28,10 +29,10 @@ function Product() {
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
-      alert('Please select both size and color');
+      setWarning('Please select both size and color');
       return;
     }
-
+    setWarning(null);
     setIsAdding(true);
     addItem({
       id: product.id,
@@ -42,10 +43,24 @@ function Product() {
       quantity: 1,
       image: product.image[0],
     });
-
+    // Google Analytics add_to_cart event
+    if (window.gtag) {
+      window.gtag('event', 'add_to_cart', {
+        currency: 'INR',
+        value: product.price,
+        items: [{
+          item_id: product.id,
+          item_name: product.name,
+          price: product.price,
+          quantity: 1,
+          item_category: product.category || '',
+          item_variant: selectedSize + '-' + selectedColor,
+        }],
+      });
+    }
     setTimeout(() => {
       setIsAdding(false);
-    }, 1000);
+    }, 800);
   };
 
   return (
@@ -112,6 +127,11 @@ function Product() {
                 ))}
               </div>
             </div>
+            {warning && (
+              <div className="mb-4 text-red-500 bg-red-100/10 border border-red-400 rounded px-4 py-2 animate-fade-in">
+                {warning}
+              </div>
+            )}
 
             {/* Size Guide */}
             <button className="text-sm text-gray-400 hover:text-white mb-6 transition-colors">

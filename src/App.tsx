@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -14,10 +14,24 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import ContactUs from './pages/ContactUs';
 import Categories from './pages/Categories'; 
 import Terms from './pages/Terms';
+import AdminPanel from './pages/AdminPanel';
+import { Toaster } from 'react-hot-toast';
+import ScrollToTop from './components/ScrollToTop';
+import { useEffect } from 'react';
 // Ensure this file exists
 
 function App() {
-  const { user } = useAuthStore();
+  const { user, userData, isLoading } = useAuthStore();
+  const location = useLocation();
+
+  // Track page views on route change
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag('event', 'page_view', {
+        page_path: location.pathname + location.search,
+      });
+    }
+  }, [location]);
 
   // Component to handle redirection if the user is not authenticated
   const AuthRedirect = ({ children }: { children: JSX.Element }) => {
@@ -27,9 +41,22 @@ function App() {
     return children;
   };
 
+  // Component to protect admin routes
+  const AdminRedirect = ({ children }: { children: JSX.Element }) => {
+    if (isLoading) {
+      return <div className="flex justify-center items-center h-screen"><span className="loader"></span>Loading...</div>;
+    }
+    if (!user || !userData || userData.role !== 'admin') {
+      return <Navigate to="/" replace />;
+    }
+    return children;
+  };
+
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen bg-black text-white">
+        <Toaster position="top-right" reverseOrder={false} />
         <Navbar />
         <main className="pt-16">
           <Routes>
@@ -53,6 +80,15 @@ function App() {
             <Route path="/categories" element={<Categories />} />
             {/* Public Auth Page */}
             <Route path="/auth" element={<Auth />} />
+            {/* Admin Panel Route */}
+            <Route
+              path="/admin"
+              element={
+                <AdminRedirect>
+                  <AdminPanel />
+                </AdminRedirect>
+              }
+            />
             {/* Catch-all Route (404) */}
             <Route path="*" element={<Navigate to="/" replace />} />
             <Route path="/terms" element={<Terms />} />

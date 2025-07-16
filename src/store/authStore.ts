@@ -6,8 +6,10 @@ import {
   User,
   updateProfile,
   getRedirectResult,
+  onAuthStateChanged,
 } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { auth, db } from '../config/firebase';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { signInWithGooglePopup } from '../services/authService';
 
 interface UserData {
@@ -17,6 +19,7 @@ interface UserData {
   role: 'user' | 'admin';
   photoURL?: string;
   phone?: string;
+  addresses?: any[];
 }
 
 interface AuthStore {
@@ -32,6 +35,7 @@ interface AuthStore {
   updateUserData: (data: UserData) => Promise<void>;
   loadUserFromLocalStorage: () => void;
   setError: (error: string | null) => void;
+  initAuthListener: () => void;
 }
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
@@ -44,7 +48,15 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
       const result = await signInWithEmailAndPassword(auth, email, password);
-      const userData = await retrieveUserData(result.user);
+      // Fetch user data from Firestore
+      const userDoc = await getDoc(doc(db, 'users', result.user.uid));
+      let userData: UserData;
+      if (userDoc.exists()) {
+        userData = userDoc.data() as UserData;
+      } else {
+        // fallback if user data is missing in Firestore
+        userData = await retrieveUserData(result.user);
+      }
       set({ user: result.user, userData, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -61,16 +73,16 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
       const result = await createUserWithEmailAndPassword(auth, email, password);
-      
       await updateProfile(result.user, { displayName: name });
-
+      // Default role is 'user', but you can manually set 'admin' in Firestore if needed
       const userData: UserData = {
         uid: result.user.uid,
         email,
         name,
         role: 'user',
       };
-
+      // Store user data in Firestore
+      await setDoc(doc(db, 'users', result.user.uid), userData);
       set({ user: result.user, userData, isLoading: false });
     } catch (error: any) {
       set({ 
@@ -87,16 +99,23 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
       const result = await signInWithGooglePopup();
-      
       if (result) {
-        const userData: UserData = {
+        // Check if user exists in Firestore
+        const userRef = doc(db, 'users', result.user.uid);
+        const userDoc = await getDoc(userRef);
+        let userData: UserData;
+        if (userDoc.exists()) {
+          userData = userDoc.data() as UserData;
+        } else {
+          userData = {
           uid: result.user.uid,
           email: result.user.email || '',
           name: result.user.displayName || 'Google User',
           role: 'user',
           photoURL: result.user.photoURL || undefined,
         };
-
+          await setDoc(userRef, userData);
+        }
         set({ user: result.user, userData, isLoading: false });
       }
     } catch (error: any) {
@@ -114,16 +133,23 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
       const result = await getRedirectResult(auth);
-      
       if (result) {
-        const userData: UserData = {
+        // Check if user exists in Firestore
+        const userRef = doc(db, 'users', result.user.uid);
+        const userDoc = await getDoc(userRef);
+        let userData: UserData;
+        if (userDoc.exists()) {
+          userData = userDoc.data() as UserData;
+        } else {
+          userData = {
           uid: result.user.uid,
           email: result.user.email || '',
           name: result.user.displayName || 'Google User',
           role: 'user',
           photoURL: result.user.photoURL || undefined,
         };
-
+          await setDoc(userRef, userData);
+        }
         set({ user: result.user, userData });
       }
       set({ isLoading: false });
@@ -145,6 +171,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
 
   updateUserData: async (data: UserData) => {
     try {
+      // Update user data in Firestore
+      await setDoc(doc(db, 'users', data.uid), data, { merge: true });
       set({ userData: data });
     } catch (error: any) {
       set({ error: error.message });
@@ -155,18 +183,41 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   loadUserFromLocalStorage: () => {
     const currentUser = auth.currentUser;
     if (currentUser) {
-      retrieveUserData(currentUser).then((userData) => {
-        if (userData) {
-          set({ user: currentUser, userData });
+      // Fetch user data from Firestore
+      getDoc(doc(db, 'users', currentUser.uid)).then((userDoc) => {
+        if (userDoc.exists()) {
+          set({ user: currentUser, userData: userDoc.data() as UserData });
         }
       });
     }
   },
 
   setError: (error: string | null) => set({ error }),
+
+  initAuthListener: () => {
+    set({ isLoading: true });
+    onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        // Fetch user data from Firestore
+        const userDoc = await getDoc(doc(db, 'users', firebaseUser.uid));
+        if (userDoc.exists()) {
+          set({ user: firebaseUser, userData: userDoc.data() as UserData, isLoading: false });
+        } else {
+          set({ user: firebaseUser, userData: null, isLoading: false });
+        }
+      } else {
+        set({ user: null, userData: null, isLoading: false });
+      }
+    });
+  },
 }));
 
 async function retrieveUserData(user: User): Promise<UserData> {
+  // Try to fetch from Firestore first
+  const userDoc = await getDoc(doc(db, 'users', user.uid));
+  if (userDoc.exists()) {
+    return userDoc.data() as UserData;
+  }
   return {
     uid: user.uid,
     email: user.email || '',

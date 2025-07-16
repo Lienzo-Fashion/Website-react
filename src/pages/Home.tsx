@@ -3,9 +3,11 @@ import { ShoppingBag, Clock, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CountdownTimer from '../components/CountdownTimer';
 import SnowEffect from '../components/SnowEffect';
+import { useAuthStore } from '../store/authStore';
 
 function Home() {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   // Set sale end date to 7 days from now
   const saleEndDate = new Date();
@@ -60,7 +62,7 @@ function Home() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
-              onClick={() => navigate('/shop')}
+              onClick={() => navigate(user ? '/shop' : '/auth')}
               className="bg-white text-black px-8 py-3 rounded-full hover:bg-gray-200 transition-colors"
             >
               Shop Now
@@ -87,7 +89,7 @@ function Home() {
                     <CountdownTimer targetDate={saleEndDate} />
                   </div>
                   <button
-                    onClick={() => navigate('/shop')}
+                    onClick={() => navigate(user ? '/shop' : '/auth')}
                     className="group flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition-colors"
                   >
                     Shop the Deal
@@ -130,7 +132,7 @@ function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
                 className="group relative aspect-[3/4] overflow-hidden rounded-lg cursor-pointer"
-                onClick={() => navigate('/shop')}
+                onClick={() => navigate(user ? '/shop' : '/auth')}
               >
                 <img
                   src={categoryImages[category]}
