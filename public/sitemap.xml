@@ -55,4 +55,14 @@
         <lastmod>2025-06-14T19:22:05+01:00</lastmod>
         <priority>1.0</priority>
     </url>
+    <url>
+        <loc>https://lienzo.co.in/cancellation-refund</loc>
+        <lastmod>2025-06-14T19:22:05+01:00</lastmod>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://lienzo.co.in/shipping-delivery</loc>
+        <lastmod>2025-06-14T19:22:05+01:00</lastmod>
+        <priority>0.8</priority>
+    </url>
 </urlset>

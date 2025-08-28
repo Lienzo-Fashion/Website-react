@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -15,10 +15,10 @@ import ContactUs from './pages/ContactUs';
 import Categories from './pages/Categories'; 
 import Terms from './pages/Terms';
 import AdminPanel from './pages/AdminPanel';
+import CancellationRefund from './pages/CancellationRefund';
+import ShippingDelivery from './pages/ShippingDelivery';
 import { Toaster } from 'react-hot-toast';
 import ScrollToTop from './components/ScrollToTop';
-import { useEffect } from 'react';
-// Ensure this file exists
 
 function App() {
   const { user, userData, isLoading } = useAuthStore();
@@ -69,6 +69,9 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/categories" element={<Categories />} />
+            {/* Policy pages */}
+            <Route path="/cancellation-refund" element={<CancellationRefund />} />
+            <Route path="/shipping-delivery" element={<ShippingDelivery />} />
             {/* Public Auth Page */}
             <Route path="/auth" element={<Auth />} />
             {/* Admin Panel Route */}

@@ -33,6 +33,11 @@ const Footer: React.FC = () => {
                   FAQ
                 </Link>
               </li>
+              <li>
+                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -48,6 +53,16 @@ const Footer: React.FC = () => {
               <li>
                 <Link to="/terms" className="text-gray-400 hover:text-white transition-colors">
                   Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link to="/cancellation-refund" className="text-gray-400 hover:text-white transition-colors">
+                  Cancellation & Refund
+                </Link>
+              </li>
+              <li>
+                <Link to="/shipping-delivery" className="text-gray-400 hover:text-white transition-colors">
+                  Shipping & Delivery
                 </Link>
               </li>
             </ul>
